@@ -1,5 +1,8 @@
-const fs = require("fs")
+const validator = require('validator');
+const getNotes = require("./notes.js")
 
-// fs.writeFileSync("notes.txt", "No siema")
+const notes = getNotes()
 
-fs.appendFileSync("notes.txt", ". Ano siema.")
+console.log(notes);
+
+console.log(validator.isURL("toolboxtaerncom"));
