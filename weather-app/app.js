@@ -1,9 +1,36 @@
-const request = require("request");
+const geoCode = require('./utils/geocode')
+const forecast = require('./utils/forecast')
 
-const url =
-  "http://api.weatherstack.com/current?access_key=ba9d10fcb561e8f08bac12df4da64d40&query=37.8267,-122.4233";
+const yargs = require('yargs')
 
-request({ url: url }, (error, response) => {
-  const data = JSON.parse(response.body);
-  console.log(data.current);
-});
+//Location command
+yargs.command({
+  command: 'forecast',
+  describe: 'Get weather forecast for a given location',
+  builder: {
+    location: {
+      describe: 'Location information',
+      demandOption: true,
+      type: 'string',
+    },
+  },
+  handler(argv) {
+    if (!argv.location) {
+      return console.log('Please provide a location')
+    }
+    geoCode(argv.location, (error, { latitude, longitude, location } = {}) => {
+      if (error) {
+        return console.log('Error: ', error)
+      }
+      forecast(latitude, longitude, (error, forecastData) => {
+        if (error) {
+          return console.log('Error: ', error)
+        }
+        console.log(location)
+        console.log(forecastData)
+      })
+    })
+  },
+})
+
+yargs.parse()
