@@ -1,5 +1,6 @@
 # See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
 
 # dependencies
+/weather-app/node_modules
 /notes-app/node_modules
 /node_modules
