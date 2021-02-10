@@ -1,0 +1,13 @@
+h1 {
+  color: gray;
+}
+
+img {
+  width: 20%;
+}
+
+ul {
+  display: flex;
+  justify-content: space-evenly;
+  list-style: none;
+}
