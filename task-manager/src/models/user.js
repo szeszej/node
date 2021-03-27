@@ -83,7 +83,7 @@ userSchema.statics.findByCredentials = async (email, password) => {
 
 userSchema.methods.generateAuthToken = async function () {
   const user = this;
-  const token = jwt.sign({ _id: user._id.toString() }, "uniquesecret", {
+  const token = jwt.sign({ _id: user._id.toString() }, process.env.JWT_SECRET, {
     expiresIn: "1 year",
   });
 
@@ -115,7 +115,7 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
-// Delee user tass when user is removed
+// Delete user tasks when user is removed
 userSchema.pre("remove", async function (next) {
   const user = this;
   await Task.deleteMany({ owner: user._id });
